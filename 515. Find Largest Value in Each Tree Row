@@ -1,0 +1,64 @@
+/**
+  * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<Integer> largestValues(TreeNode root) {
+        List<Integer> largestValues = new ArrayList<>(); // Return type of answer 
+        dfs(root, 0, largestValues);
+        return largestValues;
+    }
+    public void dfs(TreeNode node, int level, List<Integer> largestValues) { //Recursiely going down entire tree then visiting sub trees so Depth First Search
+         if (node == null){ //base case
+             return;
+         } 
+         if (largestValues.size() == level){
+             largestValues.add(node.val);
+         }
+
+         else {
+             largestValues.set(level, Math.max(largestValues.get(level), node.val));
+         }
+
+         dfs(node.left, level+1, largestValues);
+         dfs(node.right, level+1, largestValues);
+
+    }
+
+}
+
+
+
+
+
+1. **TreeNode Class**:
+   - This class represents a node in a binary tree. It has an integer value `val`, and references to its left and right child nodes.
+
+2. **Solution Class**:
+   - This class contains the `largestValues` method which is used to find the largest value in each level of the binary tree.
+
+3. **largestValues Method**:
+   - This method takes a `TreeNode` called `root` as input.
+   - It initializes a list `largestValues` which will store the largest value at each level of the tree.
+   - It then calls the `dfs` method to perform the depth-first search.
+
+4. **dfs Method**:
+   - This is a recursive function for performing a depth-first search on the binary tree.
+   - It takes three parameters: `node` (the current node being visited), `level` (the current level in the tree), and `largestValues` (the list where the largest values are stored).
+   - If the current node is `null`, it simply returns, which represents the base case of the recursion.
+   - If the size of `largestValues` is equal to the current level, it means we haven't seen this level before, so it adds the value of the current node to `largestValues`.
+   - If the size of `largestValues` is already greater than the current level, it means we have seen this level before, so it compares the value of the current node with the value stored in `largestValues` at that level, and updates it if necessary.
+   - Finally, it recursively calls `dfs` on the left and right children of the current node, with the level incremented by 1.
+
+Overall, this code efficiently finds the largest value at each level of the binary tree using a depth-first search approach.
