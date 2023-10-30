@@ -1,0 +1,28 @@
+import java.util.*;
+
+class Solution {
+    public int[] sortByBits(int[] arr) {
+        // Step 1: Convert arr to an array of Integer objects
+        Integer[] boxedArr = Arrays.stream(arr).boxed().toArray(Integer[]::new);
+
+        // Step 2: Define a custom Comparator for sorting
+        Arrays.sort(boxedArr, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer a, Integer b) {
+                // Step 3: Calculate the number of 1's in the binary representations
+                int countA = Integer.bitCount(a);
+                int countB = Integer.bitCount(b);
+
+                // Step 4: Compare based on bit count and original value
+                if (countA == countB) {
+                    return a - b; // Sort by value if bit count is the same
+                } else {
+                    return countA - countB; // Sort by bit count
+                }
+            }
+        });
+
+        // Step 5: Convert back to int array and return
+        return Arrays.stream(boxedArr).mapToInt(Integer::intValue).toArray();
+    }
+}
